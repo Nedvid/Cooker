@@ -1,0 +1,24 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="item_offset">10dp</dimen>
+    <dimen name="detail_backdrop_height">250dp</dimen>
+    <dimen name="backdrop_title">30dp</dimen>
+    <dimen name="backdrop_subtitle">18dp</dimen>
+    <dimen name="card_margin">10dp</dimen>
+    <dimen name="card_recipe_radius">5dp</dimen>
+    <dimen name="recipe_cover_height">233dp</dimen>
+    <dimen name="recipe_title">18dp</dimen>
+    <dimen name="recipe_title_padding_top">10dp</dimen>
+    <dimen name="recipe_title_padding_bottom">10dp</dimen>
+    <dimen name="recipe_title_padding_right">10dp</dimen>
+    <dimen name="recipe_title_padding_left">10dp</dimen>
+    <dimen name="recipe_count">15dp</dimen>
+    <dimen name="recipe_subtitle_padding_top">10dp</dimen>
+    <dimen name="recipe_subtitle_padding_bottom">10dp</dimen>
+    <dimen name="recipe_subtitle_padding_right">10dp</dimen>
+    <dimen name="recipe_subtitle_padding_left">10dp</dimen>
+
+</resources>
