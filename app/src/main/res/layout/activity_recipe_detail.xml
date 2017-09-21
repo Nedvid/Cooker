@@ -4,21 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/card_margin"
-        android:elevation="3dp"
-        card_view:cardCornerRadius="@dimen/card_recipe_radius">
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:elevation="3dp">
 
             <ImageView
-                android:id="@+id/thumbnail"
+                android:id="@+id/thumbnail_detail"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recipe_cover_height"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -26,10 +19,10 @@
                 android:scaleType="fitXY" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/name_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thumbnail"
+                android:layout_below="@id/thumbnail_detail"
                 android:paddingTop="10dp"
                 android:paddingBottom="0dp"
                 android:paddingLeft="10dp"
@@ -40,10 +33,10 @@
 
 
             <TextView
-                android:id="@+id/level_icon"
+                android:id="@+id/level_icon_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
+                android:layout_below="@id/name_detail"
                 android:paddingTop="8dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
@@ -53,24 +46,24 @@
                 android:text="@string/icon_level"/>
 
             <TextView
-                android:id="@+id/level"
+                android:id="@+id/level_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
+                android:layout_below="@id/name_detail"
                 android:paddingTop="5dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="2dp"
                 android:paddingRight="10dp"
-                android:layout_toRightOf="@id/level_icon"
+                android:layout_toRightOf="@id/level_icon_detail"
                 android:textSize="@dimen/recipe_count"
                 android:text="Łatwy"/>
 
             <TextView
-                android:id="@+id/time_icon"
+                android:id="@+id/time_icon_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
-                android:layout_toRightOf="@id/level"
+                android:layout_below="@id/name_detail"
+                android:layout_toRightOf="@id/level_detail"
                 android:paddingTop="8dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="0dp"
@@ -80,11 +73,11 @@
                 android:text="@string/icon_time"/>
 
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/time_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
-                android:layout_toRightOf="@id/time_icon"
+                android:layout_below="@id/name_detail"
+                android:layout_toRightOf="@id/time_icon_detail"
                 android:paddingTop="5dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="2dp"
@@ -93,11 +86,11 @@
                 android:text="60"/>
 
             <TextView
-                android:id="@+id/time_min"
+                android:id="@+id/time_min_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
-                android:layout_toRightOf="@id/time"
+                android:layout_below="@id/name_detail"
+                android:layout_toRightOf="@id/time_detail"
                 android:paddingTop="5dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="2dp"
@@ -106,11 +99,11 @@
                 android:text="min"/>
 
             <TextView
-                android:id="@+id/person_number_icon"
+                android:id="@+id/person_number_icon_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
-                android:layout_toRightOf="@id/time_min"
+                android:layout_below="@id/name_detail"
+                android:layout_toRightOf="@id/time_min_detail"
                 android:paddingTop="8dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="0dp"
@@ -119,11 +112,11 @@
                 android:text="@string/icon_number_person"/>
 
             <TextView
-                android:id="@+id/person_number"
+                android:id="@+id/person_number_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
-                android:layout_toRightOf="@id/person_number_icon"
+                android:layout_below="@id/name_detail"
+                android:layout_toRightOf="@id/person_number_icon_detail"
                 android:paddingTop="5dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="2dp"
@@ -132,11 +125,11 @@
                 android:text="4"/>
 
             <TextView
-                android:id="@+id/person_number_text"
+                android:id="@+id/person_number_text_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
-                android:layout_toRightOf="@id/person_number"
+                android:layout_below="@id/name_detail"
+                android:layout_toRightOf="@id/person_number_detail"
                 android:paddingTop="5dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="2dp"
@@ -154,7 +147,5 @@
                 android:scaleType="centerCrop"/>
             -->
         </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
 
 </LinearLayout>

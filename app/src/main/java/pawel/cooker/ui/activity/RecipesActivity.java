@@ -2,11 +2,8 @@ package pawel.cooker.ui.activity;
 
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,8 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static java.security.AccessController.getContext;
-
 public class RecipesActivity extends AppCompatActivity {
 
     private Api api;
@@ -37,7 +32,6 @@ public class RecipesActivity extends AppCompatActivity {
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipesList;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +66,7 @@ public class RecipesActivity extends AppCompatActivity {
         });
     }
 
+    /*
     private void initCollapsingToolbar() {
         final CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -99,6 +94,7 @@ public class RecipesActivity extends AppCompatActivity {
             }
         });
     }
+    */
 
     /**
      * RecyclerView item decoration - give equal margin around grid item

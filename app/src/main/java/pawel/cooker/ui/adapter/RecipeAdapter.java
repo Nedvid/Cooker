@@ -1,7 +1,10 @@
 package pawel.cooker.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +21,10 @@ import com.google.common.graph.ElementOrder;
 import java.util.List;
 import pawel.cooker.R;
 import pawel.cooker.api.model.Recipe;
+import pawel.cooker.ui.activity.LoginActivity;
+import pawel.cooker.ui.activity.RecipeDetailActivity;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static com.google.common.io.ByteStreams.copy;
 import static java.security.AccessController.getContext;
 
@@ -26,26 +33,41 @@ import static java.security.AccessController.getContext;
  */
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHolder>{
-
     private Context mContext;
     private List<Recipe> recipeList;
     private Typeface typeface_title;
     private Typeface typeface_subtitle;
+    private Typeface typeface_small;
+    private Typeface typeface_icon;
+    private View view;
+    public static final String EXTRA_MESSAGE = "2";
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         public TextView name;
         public TextView level;
+        public TextView level_icon;
         public TextView person_number;
+        public TextView person_number_icon;
+        public TextView person_number_text;
         public TextView time;
+        public TextView time_icon;
+        public TextView time_min;
         public ImageView thumbnail;
 
-        public MyViewHolder(View view){
-            super(view);
+        public MyViewHolder(View v){
+            super(v);
+            view = v;
+
             name = (TextView) view.findViewById(R.id.name);
             level = (TextView) view.findViewById(R.id.level);
+            level_icon = (TextView) view.findViewById(R.id.level_icon);
             time = (TextView) view.findViewById(R.id.time);
+            time_icon = (TextView) view.findViewById(R.id.time_icon);
+            time_min = (TextView) view.findViewById(R.id.time_min);
             person_number = (TextView) view.findViewById(R.id.person_number);
+            person_number_icon = (TextView) view.findViewById(R.id.person_number_icon);
+            person_number_text = (TextView) view.findViewById(R.id.person_number_text);
             thumbnail= (ImageView) view.findViewById(R.id.thumbnail);
         }
     }
@@ -53,8 +75,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
     public RecipeAdapter(Context mContext, List<Recipe> recipeList){
         this.mContext = mContext;
         this.recipeList = recipeList;
-        this.typeface_title = Typeface.createFromAsset(mContext.getAssets(), "fonts/Montserrat-Bold.ttf");
+        this.typeface_title = Typeface.createFromAsset(mContext.getAssets(), "fonts/Montserrat-SemiBold.ttf");
         this.typeface_subtitle = Typeface.createFromAsset(mContext.getAssets(), "fonts/Montserrat-Medium.ttf");
+        this.typeface_small = Typeface.createFromAsset(mContext.getAssets(), "fonts/Montserrat-Regular.ttf");
+        this.typeface_icon = Typeface.createFromAsset(mContext.getAssets(), "fonts/fontawesome-webfont.ttf");
     }
 
     @Override
@@ -66,27 +90,58 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Recipe recipe = recipeList.get(position);
-        holder.name.setText(recipe.getNameRecipe().substring(0,1).toUpperCase() + recipe.getNameRecipe().substring(1));
-        holder.level.setText(recipe.getLevel());
-        holder.person_number.setText(recipe.getNumberPerson().toString());
-        holder.time.setText(recipe.getTime().toString());
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+        final Recipe recipe = recipeList.get(position);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, RecipeDetailActivity.class);
+                String message = recipe.getIdRecipe().toString();
+                intent.putExtra(EXTRA_MESSAGE, message);
+                mContext.startActivity(intent);
+            }
+        });
+
+        holder.person_number_icon.setTypeface(typeface_icon);
+        holder.level_icon.setTypeface(typeface_icon);
+        holder.time_icon.setTypeface(typeface_icon);
 
         holder.name.setTypeface(typeface_title);
         holder.level.setTypeface(typeface_subtitle);
         holder.person_number.setTypeface(typeface_subtitle);
         holder.time.setTypeface(typeface_subtitle);
+        holder.time_min.setTypeface(typeface_small);
+        holder.person_number_text.setTypeface(typeface_small);
+
+        holder.person_number_icon.setTextColor(Color.parseColor("#7bd128"));
+        holder.level_icon.setTextColor(Color.parseColor("#7bd128"));
+        holder.time_icon.setTextColor(Color.parseColor("#7bd128"));
+
+        holder.name.setText(recipe.getNameRecipe().substring(0,1).toUpperCase() + recipe.getNameRecipe().substring(1));
+        holder.level.setText(recipe.getLevel());
+        holder.person_number.setText(recipe.getNumberPerson().toString());
+        if(recipe.getNumberPerson()==1) {
+            holder.person_number_text.setText("osoba");
+        }
+        if (recipe.getNumberPerson()==2 || recipe.getNumberPerson()==3||recipe.getNumberPerson()==4){
+            holder.person_number_text.setText("osoby");
+        }
+        if (recipe.getNumberPerson()>4){
+            holder.person_number_text.setText("osób");
+        }
+
+        holder.time.setText(recipe.getTime().toString());
 
         // loading album cover using Glide library
         Glide.with(mContext).load(recipe.getURLPhoto()).into(holder.thumbnail);
-
     }
 
     @Override
     public int getItemCount() {
         return recipeList.size();
     }
+
 
 
 

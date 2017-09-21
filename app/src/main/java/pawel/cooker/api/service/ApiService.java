@@ -3,6 +3,7 @@ package pawel.cooker.api.service;
 import java.util.List;
 
 import pawel.cooker.api.model.Recipe;
+import pawel.cooker.api.model.RecipeDetail;
 import pawel.cooker.api.model.User;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -21,5 +22,8 @@ public interface ApiService {
 
     @GET("/api/Recipes_/")
     Call<List<Recipe>> Recipes();
+
+    @GET("/api/recipes/id={id_recipe}/")
+    Call<RecipeDetail> RecipeDetail(@Path("id_recipe") String id_recipe);
 
 }

@@ -18,4 +18,9 @@
     <string name="title_activity_intro">IntroActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+    <string name="icon_level">&#xf0ae;</string>
+    <string name="icon_time">&#xf017;</string>
+    <string name="icon_number_person">&#xf007;</string>
 </resources>

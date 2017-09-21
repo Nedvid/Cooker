@@ -11,13 +11,15 @@
     <dimen name="card_recipe_radius">5dp</dimen>
     <dimen name="recipe_cover_height">233dp</dimen>
     <dimen name="recipe_title">18dp</dimen>
+    <dimen name="recipe_title_margin">10dp</dimen>
+    <dimen name="recipe_title_margin_bottom">5dp</dimen>
     <dimen name="recipe_title_padding_top">10dp</dimen>
     <dimen name="recipe_title_padding_bottom">10dp</dimen>
     <dimen name="recipe_title_padding_right">10dp</dimen>
     <dimen name="recipe_title_padding_left">10dp</dimen>
     <dimen name="recipe_count">15dp</dimen>
-    <dimen name="recipe_subtitle_padding_top">10dp</dimen>
-    <dimen name="recipe_subtitle_padding_bottom">10dp</dimen>
+    <dimen name="recipe_subtitle_padding_top">5dp</dimen>
+    <dimen name="recipe_subtitle_padding_bottom">15dp</dimen>
     <dimen name="recipe_subtitle_padding_right">10dp</dimen>
     <dimen name="recipe_subtitle_padding_left">10dp</dimen>
 
