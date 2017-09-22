@@ -12,12 +12,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.common.graph.ElementOrder;
 
+import java.util.ArrayList;
 import java.util.List;
 import pawel.cooker.R;
 import pawel.cooker.api.model.Recipe;
@@ -35,6 +38,7 @@ import static java.security.AccessController.getContext;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHolder>{
     private Context mContext;
     private List<Recipe> recipeList;
+    private List<Recipe> mFilteredList;
     private Typeface typeface_title;
     private Typeface typeface_subtitle;
     private Typeface typeface_small;
@@ -142,7 +146,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         return recipeList.size();
     }
 
-
-
-
+    public void filterList(List<Recipe> filteredRecipes) {
+        this.recipeList = filteredRecipes;
+        notifyDataSetChanged();
+    }
 }

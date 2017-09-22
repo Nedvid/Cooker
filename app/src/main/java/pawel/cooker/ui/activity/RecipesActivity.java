@@ -4,15 +4,22 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pawel.cooker.R;
@@ -31,6 +38,7 @@ public class RecipesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipesList;
+    private EditText editTextSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,7 @@ public class RecipesActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         //initCollapsingToolbar();
 
+        editTextSearch = (EditText) findViewById(R.id.editTextSearch);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -56,7 +65,8 @@ public class RecipesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 recipesList = response.body();
-                recyclerView.setAdapter(new RecipeAdapter(RecipesActivity.this, recipesList));
+                recipeAdapter = new RecipeAdapter(RecipesActivity.this, recipesList);
+                recyclerView.setAdapter(recipeAdapter);
             }
 
             @Override
@@ -64,6 +74,40 @@ public class RecipesActivity extends AppCompatActivity {
                 Toast.makeText(RecipesActivity.this, "Serwer nie działa.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //after the change calling the method and passing the search input
+                filter(editable.toString());
+            }
+        });
+    }
+
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        ArrayList<Recipe> filteredRecipes = new ArrayList<>();
+
+        //looping through existing elements
+        for (Recipe r : recipesList) {
+            //if the existing elements contains the search input
+            if (r.getNameRecipe().toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filteredRecipes.add(r);
+            }
+        }
+        //calling a method of the adapter class and passing the filtered list
+        recipeAdapter.filterList(filteredRecipes);
     }
 
     /*

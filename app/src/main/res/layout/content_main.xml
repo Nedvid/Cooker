@@ -9,7 +9,18 @@
     tools:context=".ui.activity.RecipesActivity"
     tools:showIn="@layout/activity_recipes">
 
+    <EditText
+        android:id="@+id/editTextSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Szukaj..."
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/editTextSearch"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
