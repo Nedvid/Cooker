@@ -16,10 +16,6 @@
             android:src="@drawable/ic_cooker_color_black"
             android:layout_gravity="center"/>
 
-        <TextView android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World, splash"/>
-
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

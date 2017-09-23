@@ -50,12 +50,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
         public TextView name;
         public TextView level;
-        public TextView level_icon;
         public TextView person_number;
-        public TextView person_number_icon;
         public TextView person_number_text;
         public TextView time;
-        public TextView time_icon;
         public TextView time_min;
         public ImageView thumbnail;
 
@@ -65,12 +62,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
             name = (TextView) view.findViewById(R.id.name);
             level = (TextView) view.findViewById(R.id.level);
-            level_icon = (TextView) view.findViewById(R.id.level_icon);
             time = (TextView) view.findViewById(R.id.time);
-            time_icon = (TextView) view.findViewById(R.id.time_icon);
             time_min = (TextView) view.findViewById(R.id.time_min);
             person_number = (TextView) view.findViewById(R.id.person_number);
-            person_number_icon = (TextView) view.findViewById(R.id.person_number_icon);
             person_number_text = (TextView) view.findViewById(R.id.person_number_text);
             thumbnail= (ImageView) view.findViewById(R.id.thumbnail);
         }
@@ -82,7 +76,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         this.typeface_title = Typeface.createFromAsset(mContext.getAssets(), "fonts/Montserrat-SemiBold.ttf");
         this.typeface_subtitle = Typeface.createFromAsset(mContext.getAssets(), "fonts/Montserrat-Medium.ttf");
         this.typeface_small = Typeface.createFromAsset(mContext.getAssets(), "fonts/Montserrat-Regular.ttf");
-        this.typeface_icon = Typeface.createFromAsset(mContext.getAssets(), "fonts/fontawesome-webfont.ttf");
     }
 
     @Override
@@ -107,9 +100,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
             }
         });
 
-        holder.person_number_icon.setTypeface(typeface_icon);
-        holder.level_icon.setTypeface(typeface_icon);
-        holder.time_icon.setTypeface(typeface_icon);
 
         holder.name.setTypeface(typeface_title);
         holder.level.setTypeface(typeface_subtitle);
@@ -118,9 +108,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         holder.time_min.setTypeface(typeface_small);
         holder.person_number_text.setTypeface(typeface_small);
 
-        holder.person_number_icon.setTextColor(Color.parseColor("#7bd128"));
-        holder.level_icon.setTextColor(Color.parseColor("#7bd128"));
-        holder.time_icon.setTextColor(Color.parseColor("#7bd128"));
 
         holder.name.setText(recipe.getNameRecipe().substring(0,1).toUpperCase() + recipe.getNameRecipe().substring(1));
         holder.level.setText(recipe.getLevel());

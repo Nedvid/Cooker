@@ -9,4 +9,6 @@
 
     <include layout="@layout/content_main" />
 
+    <include layout="@layout/nav"/>
+
 </android.support.design.widget.CoordinatorLayout>

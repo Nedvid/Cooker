@@ -16,8 +16,12 @@ import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +47,20 @@ public class RecipesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_recipes);
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //initCollapsingToolbar();
+
+        //nav
+        BottomNavigationViewEx bnve = (BottomNavigationViewEx) findViewById(R.id.navigation_view);
+        bnve.enableAnimation(false);
+        bnve.enableShiftingMode(false);
+        bnve.setTextVisibility(false);
+        bnve.setIconSize(20,20);
 
         editTextSearch = (EditText) findViewById(R.id.editTextSearch);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);

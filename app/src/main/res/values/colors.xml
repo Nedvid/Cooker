@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#72c225</color>
     <color name="colorAccent">#7bd128</color>
     <color name="black_overlay">#1e1e1e</color>
+    <color name="grey">#818181</color>
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
+
 </resources>
+

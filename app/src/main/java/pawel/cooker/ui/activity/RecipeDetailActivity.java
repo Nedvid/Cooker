@@ -8,6 +8,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,12 +37,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
     //UI
     private TextView name;
     private TextView level;
-    private TextView level_icon;
     private TextView person_number;
-    private TextView person_number_icon;
     private TextView person_number_text;
     private TextView time;
-    private TextView time_icon;
     private TextView time_min;
     private ImageView thumbnail;
 
@@ -54,6 +53,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_recipe_detail);
 
         Intent intent = getIntent();
@@ -62,12 +63,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         //UI
         name = (TextView) findViewById(R.id.name_detail);
         level = (TextView) findViewById(R.id.level_detail);
-        level_icon = (TextView) findViewById(R.id.level_icon_detail);
         time = (TextView) findViewById(R.id.time_detail);
-        time_icon = (TextView) findViewById(R.id.time_icon_detail);
         time_min = (TextView) findViewById(R.id.time_min_detail);
         person_number = (TextView) findViewById(R.id.person_number_detail);
-        person_number_icon = (TextView) findViewById(R.id.person_number_icon_detail);
         person_number_text = (TextView) findViewById(R.id.person_number_text_detail);
         thumbnail= (ImageView) findViewById(R.id.thumbnail_detail);
 
@@ -97,20 +95,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     public void setLayout(RecipeDetail recipeDetail)
     {
-        person_number_icon.setTypeface(typeface_icon);
-        level_icon.setTypeface(typeface_icon);
-        time_icon.setTypeface(typeface_icon);
-
         name.setTypeface(typeface_title);
         level.setTypeface(typeface_subtitle);
         person_number.setTypeface(typeface_subtitle);
         time.setTypeface(typeface_subtitle);
         time_min.setTypeface(typeface_small);
         person_number_text.setTypeface(typeface_small);
-
-        person_number_icon.setTextColor(Color.parseColor("#7bd128"));
-        level_icon.setTextColor(Color.parseColor("#7bd128"));
-        time_icon.setTextColor(Color.parseColor("#7bd128"));
 
         name.setText(recipeDetail.getNameRecipe().substring(0,1).toUpperCase() + recipeDetail.getNameRecipe().substring(1));
         level.setText(recipeDetail.getLevel());

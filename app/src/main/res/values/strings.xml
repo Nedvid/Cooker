@@ -23,4 +23,7 @@
     <string name="icon_level">&#xf0ae;</string>
     <string name="icon_time">&#xf017;</string>
     <string name="icon_number_person">&#xf007;</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
