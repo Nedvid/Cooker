@@ -30,6 +30,7 @@ import pawel.cooker.R;
 import pawel.cooker.api.model.Recipe;
 import pawel.cooker.api.service.Api;
 import pawel.cooker.api.service.ApiService;
+import pawel.cooker.ui.activity.nav.nav1;
 import pawel.cooker.ui.adapter.RecipeAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +44,7 @@ public class RecipesActivity extends AppCompatActivity {
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipesList;
     private EditText editTextSearch;
+    private static RecipesActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +56,12 @@ public class RecipesActivity extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //initCollapsingToolbar();
-
-        //nav
-        BottomNavigationViewEx bnve = (BottomNavigationViewEx) findViewById(R.id.navigation_view);
-        bnve.enableAnimation(false);
-        bnve.enableShiftingMode(false);
-        bnve.setTextVisibility(false);
-        bnve.setIconSize(20,20);
+        BottomNavigationViewEx navigationView;
+        navigationView = (BottomNavigationViewEx) findViewById(R.id.navigation_view);
+        navigationView.enableAnimation(false);
+        navigationView.enableShiftingMode(false);
+        navigationView.setTextVisibility(false);
+        navigationView.setIconSize(20,20);
 
         editTextSearch = (EditText) findViewById(R.id.editTextSearch);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -123,39 +124,6 @@ public class RecipesActivity extends AppCompatActivity {
         recipeAdapter.filterList(filteredRecipes);
     }
 
-    /*
-    private void initCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(" ");
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        appBarLayout.setExpanded(true);
-
-        // hiding & showing the title when toolbar expanded & collapsed
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.app_name));
-                    isShow = true;
-                } else if (isShow) {
-                    collapsingToolbar.setTitle(" ");
-                    isShow = false;
-                }
-            }
-        });
-    }
-    */
-
-    /**
-     * RecyclerView item decoration - give equal margin around grid item
-     */
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
         private int spanCount;
@@ -191,11 +159,21 @@ public class RecipesActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Converting dp to pixel
-     */
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+
+    public static RecipesActivity newInstance() {
+        RecipesActivity instance = new RecipesActivity();
+        return instance;
+    }
+
+    public static RecipesActivity getInstance() {
+        if (instance == null) {
+            instance = new RecipesActivity();
+        }
+
+        return instance;
     }
 }

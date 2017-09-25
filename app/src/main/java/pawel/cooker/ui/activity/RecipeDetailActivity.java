@@ -11,15 +11,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pawel.cooker.R;
+import pawel.cooker.api.model.ElementsDetail;
 import pawel.cooker.api.model.RecipeDetail;
 import pawel.cooker.api.service.Api;
 import pawel.cooker.api.service.ApiService;
+import pawel.cooker.ui.adapter.ElementAdapter;
 import pawel.cooker.ui.adapter.RecipeAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,10 +35,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private Api api;
     private ApiService apiService;
-    private RecyclerView recyclerView;
-    private RecipeAdapter recipeAdapter;
     private RecipeDetail recipeDetail;
+    private ElementAdapter elementAdapter;
+    private ArrayList<ElementsDetail> elementsDetail;
     private String id_recipe;
+    private ListView elementList;
 
     //UI
     private TextView name;
@@ -84,6 +91,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
                 recipeDetail=response.body();
+                elementsDetail = new ArrayList(recipeDetail.getElementsDetails());
+
+                elementAdapter = new ElementAdapter(RecipeDetailActivity.this, R.layout.list_item, elementsDetail);
+                elementList = (ListView) findViewById(R.id.listView);
+                elementList.setItemsCanFocus(false);
+                elementList.setAdapter(elementAdapter);
+
                 setLayout(recipeDetail);
             }
             @Override

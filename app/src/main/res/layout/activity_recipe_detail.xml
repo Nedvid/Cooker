@@ -132,6 +132,27 @@
                 android:paddingRight="10dp"
                 android:textSize="@dimen/recipe_count" />
 
+            <TextView
+                android:id="@+id/title_elements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/person_number_text_detail"
+                android:paddingTop="10dp"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#8f8f8f"
+                android:textSize="20dp"
+                android:text="ELEMENTY"/>
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/title_elements"
+                android:layout_marginTop="5dp"
+                android:cacheColorHint="#00000000" />
+
         </RelativeLayout>
 
 </LinearLayout>
