@@ -421,7 +421,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void Switch (){
         Toast.makeText(LoginActivity.this, "Succes!", Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this, RecipesActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

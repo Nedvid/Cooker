@@ -1,15 +1,14 @@
 package pawel.cooker.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.Window;
-import android.view.WindowManager;
+import android.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import pawel.cooker.R;
 import pawel.cooker.api.model.ElementsDetail;
@@ -31,14 +29,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailFragment extends Fragment {
+
+    private View view;
 
     private Api api;
     private ApiService apiService;
     private RecipeDetail recipeDetail;
     private ElementAdapter elementAdapter;
     private ArrayList<ElementsDetail> elementsDetail;
-    private String id_recipe;
+    private static String id_recipe;
     private ListView elementList;
 
     //UI
@@ -56,31 +56,41 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private Typeface typeface_small;
     private Typeface typeface_icon;
 
+    public RecipeDetailFragment() {
+
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_recipe_detail);
+        if (getArguments() != null) {
+            id_recipe="1";
+        }
+    }
 
-        Intent intent = getIntent();
-        this.id_recipe = intent.getStringExtra(RecipeAdapter.EXTRA_MESSAGE);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
+
+        id_recipe = this.getArguments().getString("message");
 
         //UI
-        name = (TextView) findViewById(R.id.name_detail);
-        level = (TextView) findViewById(R.id.level_detail);
-        time = (TextView) findViewById(R.id.time_detail);
-        time_min = (TextView) findViewById(R.id.time_min_detail);
-        person_number = (TextView) findViewById(R.id.person_number_detail);
-        person_number_text = (TextView) findViewById(R.id.person_number_text_detail);
-        thumbnail= (ImageView) findViewById(R.id.thumbnail_detail);
+        name = (TextView) view.findViewById(R.id.name_detail);
+        level = (TextView) view.findViewById(R.id.level_detail);
+        time = (TextView) view.findViewById(R.id.time_detail);
+        time_min = (TextView) view.findViewById(R.id.time_min_detail);
+        person_number = (TextView) view.findViewById(R.id.person_number_detail);
+        person_number_text = (TextView) view.findViewById(R.id.person_number_text_detail);
+        thumbnail= (ImageView) view.findViewById(R.id.thumbnail_detail);
 
         //fonts
-        typeface_title = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-SemiBold.ttf");
-        typeface_subtitle = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Medium.ttf");
-        typeface_small = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
-        typeface_icon = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+        typeface_title = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Montserrat-SemiBold.ttf");
+        typeface_subtitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Montserrat-Medium.ttf");
+        typeface_small = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Montserrat-Regular.ttf");
+        typeface_icon = Typeface.createFromAsset(getActivity().getAssets(), "fonts/fontawesome-webfont.ttf");
 
         //Retrofit
         api = Api.getInstance();
@@ -93,8 +103,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 recipeDetail=response.body();
                 elementsDetail = new ArrayList(recipeDetail.getElementsDetails());
 
-                elementAdapter = new ElementAdapter(RecipeDetailActivity.this, R.layout.list_item, elementsDetail);
-                elementList = (ListView) findViewById(R.id.listView);
+                elementAdapter = new ElementAdapter(getActivity(), R.layout.list_item, elementsDetail);
+                elementList = (ListView) view.findViewById(R.id.listView);
                 elementList.setItemsCanFocus(false);
                 elementList.setAdapter(elementAdapter);
 
@@ -102,9 +112,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<RecipeDetail> call, Throwable t) {
-                Toast.makeText(RecipeDetailActivity.this, "Wystąpił błąd.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Wystąpił błąd.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        return view ;
     }
 
     public void setLayout(RecipeDetail recipeDetail)
@@ -134,6 +146,4 @@ public class RecipeDetailActivity extends AppCompatActivity {
         // loading album cover using Glide library
         Glide.with(this).load(recipeDetail.getURLPhoto()).into(thumbnail);
     }
-
 }
-

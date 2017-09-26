@@ -1,27 +1,22 @@
 package pawel.cooker.ui.activity;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,44 +25,47 @@ import pawel.cooker.R;
 import pawel.cooker.api.model.Recipe;
 import pawel.cooker.api.service.Api;
 import pawel.cooker.api.service.ApiService;
-import pawel.cooker.ui.activity.nav.nav1;
 import pawel.cooker.ui.adapter.RecipeAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RecipesActivity extends AppCompatActivity {
+public class RecipesFragment extends Fragment {
 
+    private View view;
     private Api api;
     private ApiService apiService;
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipesList;
     private EditText editTextSearch;
-    private static RecipesActivity instance = null;
+
+    public RecipesFragment() {
+
+    }
+
+    public static RecipesFragment newInstance() {
+        RecipesFragment fragment = new RecipesFragment();
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_recipes);
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //initCollapsingToolbar();
-        BottomNavigationViewEx navigationView;
-        navigationView = (BottomNavigationViewEx) findViewById(R.id.navigation_view);
-        navigationView.enableAnimation(false);
-        navigationView.enableShiftingMode(false);
-        navigationView.setTextVisibility(false);
-        navigationView.setIconSize(20,20);
+    }
 
-        editTextSearch = (EditText) findViewById(R.id.editTextSearch);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_recipes, container, false);
+
+        editTextSearch = (EditText) view.findViewById(R.id.editTextSearch);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(10), true));
+        recyclerView.addItemDecoration(new RecipesFragment.GridSpacingItemDecoration(1, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //Retrofit
@@ -79,13 +77,13 @@ public class RecipesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 recipesList = response.body();
-                recipeAdapter = new RecipeAdapter(RecipesActivity.this, recipesList);
+                recipeAdapter = new RecipeAdapter(getActivity(), recipesList);
                 recyclerView.setAdapter(recipeAdapter);
             }
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Toast.makeText(RecipesActivity.this, "Serwer nie działa.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Serwer nie działa.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,6 +104,8 @@ public class RecipesActivity extends AppCompatActivity {
                 filter(editable.toString());
             }
         });
+
+        return view;
     }
 
     private void filter(String text) {
@@ -164,16 +164,4 @@ public class RecipesActivity extends AppCompatActivity {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
-    public static RecipesActivity newInstance() {
-        RecipesActivity instance = new RecipesActivity();
-        return instance;
-    }
-
-    public static RecipesActivity getInstance() {
-        if (instance == null) {
-            instance = new RecipesActivity();
-        }
-
-        return instance;
-    }
 }
