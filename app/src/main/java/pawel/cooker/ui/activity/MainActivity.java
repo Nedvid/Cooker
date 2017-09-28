@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import pawel.cooker.R;
+import pawel.cooker.api.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         BottomNavigationViewEx navigationView;
         navigationView = (BottomNavigationViewEx) findViewById(R.id.navigation_view);
         navigationView.enableAnimation(false);
@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_item3:
                                 selectedFragment = RecipesFragment.newInstance();
+                                break;
+                            case R.id.action_item4:
+                                selectedFragment = ListFragment.newInstance();
+                                break;
+                            case R.id.action_item5:
+                                selectedFragment = BlackListFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

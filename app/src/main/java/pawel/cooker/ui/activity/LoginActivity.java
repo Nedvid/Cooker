@@ -83,10 +83,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     //User
     User user= null;
 
+    //singleton
+    private static LoginActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -124,6 +127,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         apiService = api.getApiService();
 
 
+    }
+
+    public static LoginActivity getInstance() {
+        return instance ;
     }
 
     private void populateAutoComplete() {

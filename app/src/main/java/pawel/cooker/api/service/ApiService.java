@@ -26,4 +26,9 @@ public interface ApiService {
     @GET("/api/recipes/id={id_recipe}/")
     Call<RecipeDetail> RecipeDetail(@Path("id_recipe") String id_recipe);
 
+    @GET("/api/items/id={id_list}/")
+    Call<List<String>> ListItems(@Path("id_list") int id_list);
+
+    @GET("/api/black_items/id={id_user}/")
+    Call<List<String>> BlackListItems(@Path("id_user") int id_user);
 }
