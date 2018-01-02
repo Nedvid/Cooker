@@ -12,27 +12,43 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import pawel.cooker.R;
+import pawel.cooker.api.model.BlackListItem;
 import pawel.cooker.api.model.ElementsDetail;
+import pawel.cooker.api.service.Api;
+import pawel.cooker.api.service.ApiService;
+import pawel.cooker.ui.activity.BlackListFragment;
+import pawel.cooker.ui.activity.LoginActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by pawel on 28.09.2017.
  */
 
-public class BlackItemAdapter extends ArrayAdapter<String> {
+public class BlackItemAdapter extends ArrayAdapter<BlackListItem> {
+
+    private Api api;
+    private ApiService apiService;
 
     Context context;
     int layoutResourceId;
-    ArrayList<String> data = new ArrayList<String>();
+    ArrayList<BlackListItem> data = new ArrayList<BlackListItem>();
 
     public BlackItemAdapter(Context context, int layoutResourceId,
-                       ArrayList<String> data) {
+                       ArrayList<BlackListItem> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
+        api = Api.getInstance();
+        apiService = api.getApiService();
     }
 
     @Override
@@ -44,18 +60,45 @@ public class BlackItemAdapter extends ArrayAdapter<String> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new BlackItemAdapter.ItemHolder();
-            holder.textName = (TextView) row.findViewById(R.id.item_name);
+            holder.ProductName = (TextView) row.findViewById(R.id.item_name);
+            holder.btnRemove = (Button) row.findViewById(R.id.black_item_remove);
             row.setTag(holder);
         } else {
             holder = (BlackItemAdapter.ItemHolder) row.getTag();
         }
-        String item = data.get(position);
-        holder.textName.setText(item);
+        BlackListItem item = data.get(position);
+        holder.ProductName.setText(item.getProductName());
+        final int id_product = item.getIdProduct();
+        holder.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, String> map = new HashMap<>();
+                map.put("Authorization", String.valueOf(LoginActivity.getToken()));
+                Call<String> call = apiService.DeleteBlackItems(LoginActivity.getUser().getIdUser(), id_product,  map);
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.body().equals("Removed"))
+                        {
+                            Toast.makeText(context, "Removed!",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Toast.makeText(context, "Serwer nie jest uruchomiony!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
         return row;
 
     }
 
     static class ItemHolder {
-        TextView textName;
+        TextView ProductName;
+        int ProductId;
+        Button btnRemove;
     }
 }

@@ -9,49 +9,49 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class RecipeDetail {
-    @SerializedName("Id_Recipe")
+    @SerializedName("id_Recipe")
     @Expose
     private Integer idRecipe;
-    @SerializedName("Name_Recipe")
+    @SerializedName("name_Recipe")
     @Expose
     private String nameRecipe;
-    @SerializedName("Rate")
+    @SerializedName("rate")
     @Expose
     private Integer rate;
-    @SerializedName("Level")
+    @SerializedName("level")
     @Expose
     private String level;
-    @SerializedName("Date_Recipe")
+    @SerializedName("date_Recipe")
     @Expose
     private String dateRecipe;
-    @SerializedName("URL_Photo")
+    @SerializedName("urL_Photo")
     @Expose
-    private String uRLPhoto;
-    @SerializedName("Time")
+    private String urLPhoto;
+    @SerializedName("time")
     @Expose
     private Integer time;
-    @SerializedName("Number_Person")
+    @SerializedName("number_Person")
     @Expose
     private Integer numberPerson;
-    @SerializedName("Steps")
+    @SerializedName("steps")
     @Expose
     private Integer steps;
-    @SerializedName("Instruction")
+    @SerializedName("instruction")
     @Expose
     private String instruction;
-    @SerializedName("Name_User")
+    @SerializedName("name_User")
     @Expose
     private String nameUser;
-    @SerializedName("Category_Main")
+    @SerializedName("category_Main")
     @Expose
     private String categoryMain;
-    @SerializedName("Categories")
+    @SerializedName("categories")
     @Expose
-    private List<String> categories = null;
-    @SerializedName("Comments_Details")
+    private List<Object> categories = null;
+    @SerializedName("comments_Details")
     @Expose
     private List<CommentsDetail> commentsDetails = null;
-    @SerializedName("Elements_Details")
+    @SerializedName("elements_Details")
     @Expose
     private List<ElementsDetail> elementsDetails = null;
 
@@ -95,12 +95,12 @@ public class RecipeDetail {
         this.dateRecipe = dateRecipe;
     }
 
-    public String getURLPhoto() {
-        return uRLPhoto;
+    public String getUrLPhoto() {
+        return urLPhoto;
     }
 
-    public void setURLPhoto(String uRLPhoto) {
-        this.uRLPhoto = uRLPhoto;
+    public void setUrLPhoto(String urLPhoto) {
+        this.urLPhoto = urLPhoto;
     }
 
     public Integer getTime() {
@@ -151,11 +151,11 @@ public class RecipeDetail {
         this.categoryMain = categoryMain;
     }
 
-    public List<String> getCategories() {
+    public List<Object> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(List<Object> categories) {
         this.categories = categories;
     }
 

@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,9 +40,14 @@ import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.OkHttpClient;
 import pawel.cooker.R;
+import pawel.cooker.api.model.Account;
+import pawel.cooker.api.model.Token;
 import pawel.cooker.api.model.User;
 import pawel.cooker.api.service.Api;
 import pawel.cooker.api.service.ApiService;
@@ -53,25 +59,10 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mLoginView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -81,7 +72,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private ApiService apiService;
 
     //User
-    User user= null;
+    public static User user= null;
+    public static String token_acces = null;
+
+    public static String getToken() {
+        return token_acces;
+    }
+
+    public static User getUser() {
+        return user;
+    }
 
     //singleton
     private static LoginActivity instance = null;
@@ -96,8 +96,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        mLoginView = (EditText) findViewById(R.id.login);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -119,6 +118,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        Button SingUpButton = (Button) findViewById(R.id.sign_up_login_button);
+        SingUpButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Switch_Register();
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
@@ -133,66 +140,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return instance ;
     }
 
-    private void populateAutoComplete() {
-        if (!mayRequestContacts()) {
-            return;
-        }
-
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
-        return false;
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
-    }
-
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mLoginView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String login = mLoginView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -206,13 +164,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        if (TextUtils.isEmpty(login)) {
+            mLoginView.setError(getString(R.string.error_field_required));
+            focusView = mLoginView;
             cancel = true;
         }
 
@@ -222,19 +176,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView.requestFocus();
         } else {
             showProgress(true);
-            CheckLogin(email, password);
+            CheckLogin(login, password);
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
+
         return password.length() > 4;
     }
 
@@ -292,30 +241,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 
-        addEmailsToAutoComplete(emails);
     }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
 
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-    }
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -352,14 +287,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
             // TODO: register the new account here.
             return true;
         }
@@ -384,42 +311,51 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void CheckLogin(String email, String password){
+    private void CheckLogin(String login, String password){
 
         showProgress(true);
 
-        final String mEmail = email;
+        final String mLogin = login;
         final String mPassword = password;
 
-        Call<User> call = apiService.DataForUser(mEmail);
-        call.enqueue(new Callback<User>() {
+
+        Call<Token> call = apiService.Login("password", mLogin, mPassword);
+        call.enqueue(new Callback<Token>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                user=response.body();
-                String hash_pass = Hashing.sha256()
-                        .hashString(mPassword, StandardCharsets.UTF_8)
-                        .toString();
-
-                if(user==null) {
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                Token token = response.body();
+                Log.d("RESPONSE", response.toString());
+                if(token==null) {
                     showProgress(false);
-                    mEmailView.setError("Taki użytkownik nie istnieje");
-                    mEmailView.requestFocus();
+                    mLoginView.setError("Taki użytkownik nie istnieje, lub podane hasło jest nieprawidłowe");
+                    mLoginView.requestFocus();
                 }
-                else {
-                    if(hash_pass.equals(user.getPassword())) {
-                        Switch();
-                    }
-                    else {
-                        showProgress(false);
-                        mPasswordView.setError("Hasło nieprawidłowe");
-                        mPasswordView.requestFocus();
-                    }
+                else{
+                    token_acces = "Bearer " + token.getAccessToken();
+
+                    Map<String, String> map = new HashMap<>();
+                    map.put("Authorization", String.valueOf(token_acces));
+
+                    Call<User> call2 = apiService.GetUser(mLogin, map);
+                    call2.enqueue(new Callback<User>() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            user = response.body() ;
+                            Switch();
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call2, Throwable t) {
+                            Toast.makeText(LoginActivity.this, "Serwer nie jest uruchomiony.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<Token> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Serwer nie jest uruchomiony.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -429,6 +365,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Toast.makeText(LoginActivity.this, "Succes!", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void Switch_Register(){
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 }

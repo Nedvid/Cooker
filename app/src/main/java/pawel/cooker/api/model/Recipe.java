@@ -8,58 +8,61 @@ import com.google.gson.annotations.SerializedName;
 
 public class Recipe {
 
-    @SerializedName("Id_Recipe")
+    @SerializedName("id_Recipe")
     @Expose
     private Integer idRecipe;
-    @SerializedName("Id_User")
+    @SerializedName("id_User")
     @Expose
     private Integer idUser;
-    @SerializedName("Id_Category_Main")
+    @SerializedName("id_Category_Main")
     @Expose
     private Integer idCategoryMain;
-    @SerializedName("Name_Recipe")
+    @SerializedName("name_Recipe")
     @Expose
     private String nameRecipe;
-    @SerializedName("Rate")
+    @SerializedName("rate")
     @Expose
     private Integer rate;
-    @SerializedName("Level")
+    @SerializedName("level")
     @Expose
     private String level;
-    @SerializedName("Date_Recipe")
+    @SerializedName("date_Recipe")
     @Expose
     private String dateRecipe;
-    @SerializedName("URL_Photo")
+    @SerializedName("urL_Photo")
     @Expose
-    private String uRLPhoto;
-    @SerializedName("Time")
+    private String urLPhoto;
+    @SerializedName("time")
     @Expose
     private Integer time;
-    @SerializedName("Number_Person")
+    @SerializedName("number_Person")
     @Expose
     private Integer numberPerson;
-    @SerializedName("Steps")
+    @SerializedName("steps")
     @Expose
     private Integer steps;
-    @SerializedName("Instruction")
+    @SerializedName("instruction")
     @Expose
     private String instruction;
-    @SerializedName("User")
+    @SerializedName("visible")
+    @Expose
+    private Boolean visible;
+    @SerializedName("user")
     @Expose
     private Object user;
-    @SerializedName("Category_Main")
+    @SerializedName("category_Main")
     @Expose
     private Object categoryMain;
-    @SerializedName("Categories_Recipes")
+    @SerializedName("categories_Recipes")
     @Expose
     private Object categoriesRecipes;
-    @SerializedName("Comments")
+    @SerializedName("comments")
     @Expose
     private Object comments;
-    @SerializedName("Elements")
+    @SerializedName("elements")
     @Expose
     private Object elements;
-    @SerializedName("Rates")
+    @SerializedName("rates")
     @Expose
     private Object rates;
 
@@ -119,12 +122,12 @@ public class Recipe {
         this.dateRecipe = dateRecipe;
     }
 
-    public String getURLPhoto() {
-        return uRLPhoto;
+    public String getUrLPhoto() {
+        return urLPhoto;
     }
 
-    public void setURLPhoto(String uRLPhoto) {
-        this.uRLPhoto = uRLPhoto;
+    public void setUrLPhoto(String urLPhoto) {
+        this.urLPhoto = urLPhoto;
     }
 
     public Integer getTime() {
@@ -157,6 +160,14 @@ public class Recipe {
 
     public void setInstruction(String instruction) {
         this.instruction = instruction;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     public Object getUser() {

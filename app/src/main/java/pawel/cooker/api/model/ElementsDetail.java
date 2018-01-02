@@ -8,10 +8,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ElementsDetail {
-    @SerializedName("Name_Product")
+    @SerializedName("name_Product")
     @Expose
     private String nameProduct;
-    @SerializedName("Quantity")
+    @SerializedName("quantity")
     @Expose
     private String quantity;
 

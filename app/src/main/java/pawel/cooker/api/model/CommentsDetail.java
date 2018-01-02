@@ -8,13 +8,14 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class CommentsDetail {
-    @SerializedName("Name_User")
+
+    @SerializedName("name_User")
     @Expose
     private String nameUser;
-    @SerializedName("Text")
+    @SerializedName("text")
     @Expose
     private String text;
-    @SerializedName("Date_Comment")
+    @SerializedName("date_Comment")
     @Expose
     private String dateComment;
 

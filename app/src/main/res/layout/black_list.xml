@@ -7,11 +7,25 @@
 
     <TextView
         android:id="@+id/item_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="3dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="User Name"
-        android:textSize="15dp" />
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/black_item_remove"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_minus_button"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        />
 
 </RelativeLayout>

@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.RecipeDetail_Elements"
+    android:background="#fff">
+
+    <Button
+        android:id="@+id/add_items_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Dodaj wszystkie"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="@drawable/button_green"/>
+
+    <ListView
+        android:id="@+id/list_recipe_items"
+        android:layout_below="@id/add_items_button"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="5dp"
+        android:cacheColorHint="#00000000" />
+
+</RelativeLayout>

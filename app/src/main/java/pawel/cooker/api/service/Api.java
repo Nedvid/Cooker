@@ -9,10 +9,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 //SINGLETON
 
+    //to do
+    // kalkulator jednostek
+    // przefiltrować kategorie, wegańskie wegetariańskie
+    
+
 public class Api {
 
     private static Api instance = null;
-    public static final String BASE_URL = "http://192.168.0.15:63424/";
+    public static final String BASE_URL = "http://10.160.44.73:63818/";
     public static Retrofit retrofit;
     public static ApiService apiService;
 

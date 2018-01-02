@@ -1,31 +1,18 @@
 package pawel.cooker.ui.activity;
 
-import android.content.Context;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import pawel.cooker.R;
-import pawel.cooker.api.model.ElementsDetail;
-import pawel.cooker.api.model.RecipeDetail;
 import pawel.cooker.api.model.User;
 import pawel.cooker.api.service.Api;
 import pawel.cooker.api.service.ApiService;
-import pawel.cooker.ui.adapter.ElementAdapter;
 import pawel.cooker.ui.adapter.ItemAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,10 +62,13 @@ public class ListFragment extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 items=response.body();
-                aitems = new ArrayList(items);
-                itemAdapter = new ItemAdapter(getActivity(), R.layout.list, aitems);
-                itemList.setItemsCanFocus(false);
-                itemList.setAdapter(itemAdapter);
+                if (items != null){
+                    aitems = new ArrayList(items);
+                    itemAdapter = new ItemAdapter(getActivity(), R.layout.list, aitems);
+                    itemList.setItemsCanFocus(false);
+                    itemList.setAdapter(itemAdapter);
+                }
+
             }
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {

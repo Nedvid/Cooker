@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".ui.activity.RecipeDetail_Comments"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/author_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dp"
+        android:text="User Name"
+        android:textSize="15dp"
+        android:background="#fff"/>
+
+    <TextView
+        android:id="@+id/date_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/author_comment"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:textSize="10dp"
+        android:text="Location"
+        android:background="#fff"/>
+
+    <TextView
+        android:id="@+id/text_comment"
+        android:layout_width="match_parent"
+        android:padding="16dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/date_comment"
+        android:layout_marginTop="10dp"
+        android:textSize="13dp"
+        android:text="Lorem Ipsum Dolor Sit Amet"
+        android:background="@drawable/button_stroke_green"/>
+
+</RelativeLayout>

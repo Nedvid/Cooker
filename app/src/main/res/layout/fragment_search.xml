@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.SearchFragment"
+    android:background="#fff"
+    android:padding="16dp">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoProducts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:hint="Wybierz produkty"
+        android:ems="10">
+    <requestFocus />
+    </AutoCompleteTextView>
+
+    <TextView
+        android:id="@+id/text_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kategoria"
+        android:layout_below="@id/autoProducts"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_category"/>
+
+    <TextView
+        android:id="@+id/text_category_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Główna Kategoria"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/spinner_category"/>
+
+    <Spinner
+        android:id="@+id/spinner_main_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_category_main"/>
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox_blacklist"
+        android:layout_marginTop="10dp"
+        android:textColor="#818181"
+        android:layout_below="@id/spinner_main_category"
+        android:text="Uwzględnij produkty z czarnej listy"/>
+
+    <Button
+        android:id="@+id/search_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="szukaj"
+        android:layout_below="@id/checkbox_blacklist"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="@drawable/button_green"/>
+
+    <Button
+        android:id="@+id/clear_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="wyczyść"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@id/search_button"
+        android:background="@drawable/button_stroke_green"/>
+
+
+</RelativeLayout>

@@ -8,40 +8,148 @@
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:layout_marginTop="60dp"
-            android:scrollbars="vertical" />
+        android:layout_height="wrap_content"
+        android:id="@+id/frame_recipes">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_height="35dp"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:minHeight="?attr/actionBarSize"
             android:background="@drawable/gradient">
         </android.support.v7.widget.Toolbar>
 
         <EditText
+            android:clickable="true"
             android:id="@+id/editTextSearch"
-            android:drawableRight="@drawable/ic_list_symbol_of_three_items_with_dots"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="45dp"
+            android:textSize="17dp"
             android:hint="Szukaj..."
+            android:textColor="#fff"
+            android:textColorHint="#79ffffff"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="16dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:background="@drawable/search"/>
 
+        <ImageView
+            android:clickable="true"
+            android:id="@+id/filter_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="360dp"
+            android:src="@drawable/ic_list_symbol_of_three_items_with_dots"/>
     </FrameLayout>
 
+    <TableLayout
+        android:id="@+id/search_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frame_recipes"
+        android:padding="20dp"
+        android:background="#fff"
+        android:orientation="horizontal">
 
+        <com.cunoraz.tagview.TagView
+            xmlns:tagview="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/products_tag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            tagview:lineMargin="5dp"
+            tagview:tagMargin="5dp"
+            tagview:textPaddingLeft="8dp"
+            tagview:textPaddingTop="5dp"
+            tagview:textPaddingRight="8dp"
+            tagview:textPaddingBottom="5dp" />
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoProducts"
+                android:layout_column="1"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:hint="Wybierz produkty"
+                android:textSize="13dp"
+                android:ems="5">
+                <requestFocus />
+            </AutoCompleteTextView>
+
+            <ImageView
+                android:id="@+id/add_product_list"
+                android:layout_column="1"
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_plus_button"/>
+
+        </TableRow>
+
+        <TextView
+            android:id="@+id/text_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kategoria"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/text_category_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Główna Kategoria"
+            android:textStyle="bold"
+            android:textSize="12dp"
+            android:layout_marginTop="10dp" />
+
+        <Spinner
+            android:id="@+id/spinner_main_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkbox_blacklist"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="#818181"
+            android:text="Uwzględnij produkty z czarnej listy"/>
+
+        <ImageView
+            android:layout_marginRight="178dp"
+            android:layout_marginLeft="178dp"
+            android:id="@+id/close_search"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_caret_arrow_up"/>
+    </TableLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:layout_alignParentBottom="true"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/search_detail" />
 
 </RelativeLayout>

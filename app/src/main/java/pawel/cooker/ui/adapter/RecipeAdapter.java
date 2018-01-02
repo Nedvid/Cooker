@@ -1,12 +1,11 @@
 package pawel.cooker.ui.adapter;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,16 +81,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                FragmentManager fm = ((Activity)mContext).getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
+                FragmentTransaction transaction = ((AppCompatActivity)mContext).getSupportFragmentManager().beginTransaction();
+                RecipeDetailFragment rdf = new RecipeDetailFragment();
                 Bundle bundle = new Bundle();
                 String myMessage = recipe.getIdRecipe().toString();
                 bundle.putString("message", myMessage );
-                RecipeDetailFragment rdf = new RecipeDetailFragment();
                 rdf.setArguments(bundle);
-                ft.replace(R.id.frame_container, rdf);
-                ft.commit();
+
+                transaction.replace(R.id.frame_container, rdf);
+                transaction.commit();
             }
         });
 
@@ -120,7 +118,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         holder.time.setText(recipe.getTime().toString());
 
         // loading album cover using Glide library
-        Glide.with(mContext).load(recipe.getURLPhoto()).into(holder.thumbnail);
+        Glide.with(mContext).load(recipe.getUrLPhoto()).into(holder.thumbnail);
     }
 
     @Override

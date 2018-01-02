@@ -5,40 +5,37 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    @SerializedName("Id_User")
+    @SerializedName("id_User")
     @Expose
     private Integer idUser;
-    @SerializedName("Id_List")
-    @Expose
-    private Integer idList;
-    @SerializedName("Login")
+    @SerializedName("login")
     @Expose
     private String login;
-    @SerializedName("Email")
+    @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("Password")
+    @SerializedName("id_List")
     @Expose
-    private String password;
-    @SerializedName("Social_Account")
+    private Integer idList;
+    @SerializedName("social_Account")
     @Expose
     private Boolean socialAccount;
-    @SerializedName("URL_Avatar")
+    @SerializedName("urL_Avatar")
     @Expose
-    private String uRLAvatar;
-    @SerializedName("List")
+    private Object urLAvatar;
+    @SerializedName("list")
     @Expose
     private Object list;
-    @SerializedName("Recipes")
+    @SerializedName("recipes")
     @Expose
     private Object recipes;
-    @SerializedName("Black_Items")
+    @SerializedName("black_Items")
     @Expose
     private Object blackItems;
-    @SerializedName("Comments")
+    @SerializedName("comments")
     @Expose
     private Object comments;
-    @SerializedName("Rates")
+    @SerializedName("rates")
     @Expose
     private Object rates;
 
@@ -48,14 +45,6 @@ public class User {
 
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
-    }
-
-    public Integer getIdList() {
-        return idList;
-    }
-
-    public void setIdList(Integer idList) {
-        this.idList = idList;
     }
 
     public String getLogin() {
@@ -74,12 +63,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public Integer getIdList() {
+        return idList;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setIdList(Integer idList) {
+        this.idList = idList;
     }
 
     public Boolean getSocialAccount() {
@@ -90,12 +79,12 @@ public class User {
         this.socialAccount = socialAccount;
     }
 
-    public String getURLAvatar() {
-        return uRLAvatar;
+    public Object getUrLAvatar() {
+        return urLAvatar;
     }
 
-    public void setURLAvatar(String uRLAvatar) {
-        this.uRLAvatar = uRLAvatar;
+    public void setUrLAvatar(Object urLAvatar) {
+        this.urLAvatar = urLAvatar;
     }
 
     public Object getList() {
@@ -137,5 +126,6 @@ public class User {
     public void setRates(Object rates) {
         this.rates = rates;
     }
+
 
 }

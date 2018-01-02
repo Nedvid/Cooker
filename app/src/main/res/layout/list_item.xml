@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".ui.activity.RecipeDetailFragment" >
+    tools:context=".ui.activity.RecipeDetailFragment"
+    android:background="#fff">
 
     <TextView
         android:id="@+id/element_name"
@@ -12,18 +13,21 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="User Name"
-        android:textSize="20dp" />
+        android:textSize="15dp"
+        android:background="#fff"/>
 
     <Button
         android:id="@+id/element_add"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/ic_002_add_button"
+        android:background="@drawable/ic_plus_button"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        />
 
     <TextView
         android:id="@+id/element_quantity"
@@ -32,6 +36,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/element_name"
         android:layout_marginTop="5dp"
-        android:text="Location" />
+        android:textSize="13dp"
+        android:text="Location"
+        android:background="#fff"/>
 
 </RelativeLayout>

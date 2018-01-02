@@ -1,30 +1,29 @@
 package pawel.cooker.ui.activity;
 
-import android.content.Context;
-import android.content.Intent;
+
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import java.util.ArrayList;
-
 import pawel.cooker.R;
 import pawel.cooker.api.model.ElementsDetail;
 import pawel.cooker.api.model.RecipeDetail;
 import pawel.cooker.api.service.Api;
 import pawel.cooker.api.service.ApiService;
 import pawel.cooker.ui.adapter.ElementAdapter;
-import pawel.cooker.ui.adapter.RecipeAdapter;
+import pawel.cooker.ui.adapter.StepsAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,11 +34,24 @@ public class RecipeDetailFragment extends Fragment {
 
     private Api api;
     private ApiService apiService;
-    private RecipeDetail recipeDetail;
+
+    public static RecipeDetail recipeDetail;
+
+    public static RecipeDetail getRecipeDetail() {
+        return recipeDetail;
+    }
+
+    public void setRecipeDetail(RecipeDetail recipeDetail) {
+        this.recipeDetail = recipeDetail;
+    }
+
     private ElementAdapter elementAdapter;
     private ArrayList<ElementsDetail> elementsDetail;
+    private ArrayList<String> steps;
+    private StepsAdapter stepsAdapter;
     private static String id_recipe;
     private ListView elementList;
+    private ListView stepsList;
 
     //UI
     private TextView name;
@@ -74,6 +86,38 @@ public class RecipeDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
+        BottomNavigationViewEx navigationView;
+
+        navigationView = (BottomNavigationViewEx) view.findViewById(R.id.navigation_recipe_view);
+        navigationView.enableAnimation(true);
+        navigationView.enableShiftingMode(false);
+        navigationView.setTextVisibility(true);
+        navigationView.setIconVisibility(false);
+        navigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.action_recipe_item1:
+                                selectedFragment = new RecipeDetail_Recipe();
+                                break;
+                            case R.id.action_recipe_item2:
+                                selectedFragment = new RecipeDetail_Elements();
+                                break;
+                            case R.id.action_recipe_item3:
+                                selectedFragment = new RecipeDetail_Comments();
+                                break;
+                        }
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_recipe_container, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
+
+
+
 
         id_recipe = this.getArguments().getString("message");
 
@@ -96,18 +140,12 @@ public class RecipeDetailFragment extends Fragment {
         api = Api.getInstance();
         apiService = api.getApiService();
 
+
         Call<RecipeDetail> call = apiService.RecipeDetail(id_recipe);
         call.enqueue(new Callback<RecipeDetail>() {
             @Override
             public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
-                recipeDetail=response.body();
-                elementsDetail = new ArrayList(recipeDetail.getElementsDetails());
-
-                elementAdapter = new ElementAdapter(getActivity(), R.layout.list_item, elementsDetail);
-                elementList = (ListView) view.findViewById(R.id.listView);
-                elementList.setItemsCanFocus(false);
-                elementList.setAdapter(elementAdapter);
-
+                setRecipeDetail(response.body());
                 setLayout(recipeDetail);
             }
             @Override
@@ -115,7 +153,6 @@ public class RecipeDetailFragment extends Fragment {
                 Toast.makeText(getActivity(), "Wystąpił błąd.", Toast.LENGTH_SHORT).show();
             }
         });
-
         return view ;
     }
 
@@ -143,7 +180,7 @@ public class RecipeDetailFragment extends Fragment {
 
         time.setText(recipeDetail.getTime().toString());
 
-        // loading album cover using Glide library
-        Glide.with(this).load(recipeDetail.getURLPhoto()).into(thumbnail);
+        Glide.with(this).load(recipeDetail.getUrLPhoto()).into(thumbnail);
     }
+
 }

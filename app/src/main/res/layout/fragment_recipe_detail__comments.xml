@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.RecipeDetail_Comments"
+    android:background="#fff">
+
+    <EditText
+        android:id="@+id/comment_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:textSize="13dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Napisz coś..."
+        android:background="@drawable/button_stroke_green"/>
+
+    <Button
+        android:id="@+id/add_comment_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_below="@id/comment_edittext"
+        android:text="Dodaj komentarz"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="@drawable/button_green"/>
+
+    <ListView
+        android:id="@+id/list_recipe_comments"
+        android:layout_below="@id/add_comment_button"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="5dp"
+        android:cacheColorHint="#00000000" />
+
+</RelativeLayout>
